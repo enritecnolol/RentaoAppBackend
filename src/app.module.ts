@@ -11,6 +11,7 @@ import { HostModule } from './host/host.module';
 import { customerModule } from './customer/customer.module';
 import { HostCarModule } from './host-car/host-car.module';
 import { BookingModule } from './booking/booking.module';
+import { carAvailabilityModule } from './car-availability/car-availability.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { BookingModule } from './booking/booking.module';
     customerModule,
     HostCarModule,
     BookingModule,
+    carAvailabilityModule,
   ],
   controllers: [AppController],
   providers: [

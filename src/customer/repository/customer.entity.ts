@@ -22,28 +22,28 @@ export class Customer {
   @Column({ unique: true })
   email: string;
 
-  @Column({ unique: true })
+  @Column({ unique: true, nullable: true })
   driverLicense: string;
 
-  @Column({ type: 'date' })
+  @Column({ type: 'date', nullable: true })
   expiry: string;
 
-  @Column({ type: 'date' })
+  @Column({ type: 'date', nullable: true })
   dateOfBirth: string;
 
-  @Column()
+  @Column({ nullable: true })
   phoneNumber: string;
 
-  @Column()
+  @Column({ nullable: true })
   address: string;
 
-  @Column()
+  @Column({ nullable: true })
   city: string;
 
-  @Column()
+  @Column({ nullable: true })
   postalCode: string;
 
-  @Column()
+  @Column({ nullable: true })
   nationality: string;
 
   @OneToMany(() => Booking, (booking) => booking.customer, {

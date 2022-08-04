@@ -1,4 +1,3 @@
-import { Billing } from 'src/billing/repository/billing.entity';
 import { Customer } from 'src/customer/repository/customer.entity';
 import { HostCar } from 'src/host-car/repository/host-car.entity';
 import { Host } from 'src/host/repository/host.entity';
@@ -8,9 +7,7 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
   ManyToOne,
-  OneToOne,
 } from 'typeorm';
 
 export enum BookingStatus {
@@ -51,11 +48,6 @@ export class Booking {
     onDelete: 'CASCADE',
   })
   hostCar: HostCar;
-
-  @OneToOne(() => Billing, (billing) => billing.booking, {
-    onDelete: 'CASCADE',
-  })
-  billing: Billing;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

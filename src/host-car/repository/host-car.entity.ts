@@ -1,4 +1,5 @@
 import { Booking } from 'src/booking/repository/booking.entity';
+import { CarAvailability } from 'src/car-availability/repository/car-availability.entity';
 import { Host } from 'src/host/repository/host.entity';
 import {
   Column,
@@ -8,6 +9,7 @@ import {
   UpdateDateColumn,
   ManyToOne,
   OneToMany,
+  OneToOne,
 } from 'typeorm';
 
 @Entity()
@@ -31,10 +33,16 @@ export class HostCar {
   style: string;
 
   @Column()
+  transmission: string;
+
+  @Column()
+  color: string;
+
+  @Column()
   insurence: string;
 
   @Column()
-  registration: string;
+  licensePlateNo: string;
 
   @Column()
   latitude: string;
@@ -58,6 +66,16 @@ export class HostCar {
     onDelete: 'CASCADE',
   })
   bookings: Booking[];
+
+  @OneToOne(
+    () => CarAvailability,
+    (CarAvailability) => CarAvailability.hostCar,
+    {
+      nullable: true,
+      onDelete: 'CASCADE',
+    },
+  )
+  carAvailability: CarAvailability;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
