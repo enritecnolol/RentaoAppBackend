@@ -4,14 +4,15 @@ import { APP_FILTER } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigurationService } from './config-module/config-service/config.service';
-import { ConfigurationModule } from './config-module/config.module';
+import { ConfigurationService } from './modules/config-module/config-service/config.service';
+import { ConfigurationModule } from './modules/config-module/config.module';
 import { HttpExceptionFilter } from 'http-exception.filter';
-import { HostModule } from './host/host.module';
-import { customerModule } from './customer/customer.module';
-import { HostCarModule } from './host-car/host-car.module';
-import { BookingModule } from './booking/booking.module';
-import { carAvailabilityModule } from './car-availability/car-availability.module';
+import { HostModule } from './modules/host/host.module';
+import { customerModule } from './modules/customer/customer.module';
+import { HostCarModule } from './modules/host-car/host-car.module';
+import { BookingModule } from './modules/booking/booking.module';
+import { CarAvailabilityModule } from './modules/car-availability/car-availability.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -31,7 +32,8 @@ import { carAvailabilityModule } from './car-availability/car-availability.modul
     customerModule,
     HostCarModule,
     BookingModule,
-    carAvailabilityModule,
+    CarAvailabilityModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [
