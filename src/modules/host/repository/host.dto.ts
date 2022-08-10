@@ -1,5 +1,4 @@
 import {
-  IsDate,
   IsDateString,
   IsEmail,
   IsNumber,
@@ -20,7 +19,7 @@ export class CreateHostDTO {
   @IsString()
   @IsOptional()
   nationality?: string;
-  @IsDate()
+  @IsDateString()
   @IsOptional()
   dateOfBirth?: string;
   @IsString()

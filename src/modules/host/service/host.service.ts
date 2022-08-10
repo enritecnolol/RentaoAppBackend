@@ -38,7 +38,7 @@ export class HostService {
         loadRelationIds: true,
       });
     } catch (error) {
-      throw new HttpException('there was an error: host-findByEmail', 400);
+      throw new HttpException('there was an error: host-findById', 400);
     }
   }
 

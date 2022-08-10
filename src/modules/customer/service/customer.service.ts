@@ -1,7 +1,10 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateCustomerDTO } from '../repository/customer.dto';
+import {
+  CreateCustomerDTO,
+  UpdateCustomerDTO,
+} from '../repository/customer.dto';
 import { Customer } from '../repository/customer.entity';
 
 @Injectable()
@@ -15,7 +18,7 @@ export class CustomerService {
     try {
       return await this.customerRepository.save(customer);
     } catch (error) {
-      throw new HttpException('there was an error: host-create', 400);
+      throw new HttpException('there was an error: customer-create', 400);
     }
   }
 
@@ -25,7 +28,24 @@ export class CustomerService {
         email,
       });
     } catch (error) {
-      throw new HttpException('there was an error: host-findByEmail', 400);
+      throw new HttpException('there was an error: customer-findByEmail', 400);
     }
+  }
+
+  async findById(id: number): Promise<Customer> {
+    try {
+      return await this.customerRepository.findOne({
+        where: {
+          id,
+        },
+        loadRelationIds: true,
+      });
+    } catch (error) {
+      throw new HttpException('there was an error: customer-findById', 400);
+    }
+  }
+
+  async update(customer: UpdateCustomerDTO): Promise<Customer> {
+    return this.customerRepository.save(customer, { reload: true });
   }
 }

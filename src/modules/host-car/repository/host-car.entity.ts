@@ -77,6 +77,9 @@ export class HostCar {
   )
   carAvailability: CarAvailability;
 
+  @Column({ default: false })
+  validated: boolean;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
