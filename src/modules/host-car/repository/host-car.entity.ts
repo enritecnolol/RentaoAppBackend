@@ -80,6 +80,9 @@ export class HostCar {
   @Column({ default: false })
   validated: boolean;
 
+  @Column({ default: false })
+  active: boolean;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
