@@ -1,6 +1,7 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { CarAvailabilityService } from '../../car-availability/service/car-availability.service';
 import { HostService } from '../../host/service/host.service';
 import { CreateHostCarDTO, UpdateHostCarDTO } from '../repository/host-car.dto';
 import { HostCar } from '../repository/host-car.entity';
@@ -11,13 +12,14 @@ export class HostCarService {
     @InjectRepository(HostCar)
     private hostCarRepository: Repository<HostCar>,
     private hostService: HostService,
+    private carAvailabilityService: CarAvailabilityService,
   ) {}
 
   async create(hostCar: CreateHostCarDTO): Promise<HostCar> {
     try {
       const hostCarDTO = await this.hostCarRepository.create(hostCar);
-      const host = await this.hostService.findById(hostCar.hostId);
-      hostCarDTO.host = host;
+      hostCarDTO.host = await this.hostService.findById(hostCar.hostId);
+      hostCarDTO.carAvailability = await this.carAvailabilityService.create({});
       const hostData = await this.hostCarRepository.save(hostCarDTO);
       return hostData;
     } catch (error) {

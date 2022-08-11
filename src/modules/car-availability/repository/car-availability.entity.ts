@@ -14,16 +14,16 @@ export class CarAvailability {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   currentStatus: string;
 
-  @Column()
+  @Column({ nullable: true, type: 'date' })
   startDate: string;
 
-  @Column()
+  @Column({ nullable: true, type: 'date' })
   endDate: string;
 
-  @Column()
+  @Column({ nullable: true })
   parkingDetails: string;
 
   @OneToOne(() => HostCar, (hostCar) => hostCar.carAvailability, {
