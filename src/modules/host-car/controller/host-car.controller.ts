@@ -5,9 +5,12 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
+import { query } from 'express';
 import { JwtAuthGuard } from '../../auth/guard/jwt-auth.guard';
+import { UpdateCarAvailability } from '../../car-availability/repository/car-availability.dto';
 import { CreateHostCarDTO, UpdateHostCarDTO } from '../repository/host-car.dto';
 import { HostCarService } from '../service/host-car.service';
 
@@ -19,6 +22,18 @@ export class HostCarController {
   @Post()
   create(@Body() hostCar: CreateHostCarDTO) {
     return this.hostCarService.create(hostCar);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get()
+  findAll(@Body() options) {
+    return this.hostCarService.findAll(options);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('available')
+  findAllAvailable(@Body() options) {
+    return this.hostCarService.findAllAvailable(options);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -34,5 +49,11 @@ export class HostCarController {
       id: +id,
       ...hostCar,
     });
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put(':id/availability')
+  updateAvailability(@Param('id') id: string, @Body() carAvailability) {
+    return this.hostCarService.updateAvailability(+id, carAvailability);
   }
 }

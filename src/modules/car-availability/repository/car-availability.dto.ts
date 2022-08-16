@@ -1,10 +1,17 @@
-import { IsDateString, IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+  IsDateString,
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
+import { currentStatus } from './car-availability.entity';
 
 export class CreateCarAvailability {
-  @IsString()
+  @IsEnum(currentStatus)
   @IsOptional()
-  currentStatus?: string;
+  currentStatus?: currentStatus;
   @IsDateString()
   @IsOptional()
   startDate?: string;

@@ -14,7 +14,7 @@ export class HttpExceptionFilter
   implements ExceptionFilter
 {
   catch(exception: any, host: ArgumentsHost) {
-    console.log(exception.response.message);
+    console.log('exception.response: ', exception);
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
@@ -22,11 +22,11 @@ export class HttpExceptionFilter
       exception instanceof HttpException
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
-    let message = '';
+    let message: string | HttpException = '';
     if (!exception.response.message) {
       message =
         exception instanceof HttpException
-          ? exception.message
+          ? exception.message ?? exception
           : 'Internal server error';
     } else {
       message = exception.response.message;

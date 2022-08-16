@@ -9,13 +9,23 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+export enum currentStatus {
+  AVAILABLE = 'AVAILABLE',
+  OUT_OF_SERVICE = 'OUT OF SERVICE',
+  RENTED = 'RENTED',
+}
+
 @Entity()
 export class CarAvailability {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: true })
-  currentStatus: string;
+  @Column({
+    type: 'enum',
+    enum: currentStatus,
+    default: currentStatus.OUT_OF_SERVICE,
+  })
+  currentStatus: currentStatus;
 
   @Column({ nullable: true, type: 'date' })
   startDate: string;

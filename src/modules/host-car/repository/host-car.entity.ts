@@ -73,6 +73,8 @@ export class HostCar {
     {
       nullable: true,
       onDelete: 'CASCADE',
+      cascade: true,
+      eager: true,
     },
   )
   carAvailability: CarAvailability;
@@ -80,7 +82,7 @@ export class HostCar {
   @Column({ default: false })
   validated: boolean;
 
-  @Column({ default: false })
+  @Column({ default: true })
   active: boolean;
 
   @CreateDateColumn({ name: 'created_at' })
