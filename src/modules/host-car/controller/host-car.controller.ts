@@ -33,7 +33,16 @@ export class HostCarController {
   @UseGuards(JwtAuthGuard)
   @Get('available')
   findAllAvailable(@Body() options) {
-    return this.hostCarService.findAllAvailable(options);
+    let bookingDates = {};
+    if (options.pickupDate && options.returnDate) {
+      bookingDates = {
+        pickupDate: options.pickupDate,
+        returnDate: options.returnDate,
+      };
+      delete options.pickupDate;
+      delete options.returnDate;
+    }
+    return this.hostCarService.findAllAvailable(options, bookingDates);
   }
 
   @UseGuards(JwtAuthGuard)

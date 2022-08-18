@@ -11,9 +11,9 @@ import {
 } from 'typeorm';
 
 export enum BookingStatus {
-  PENDING,
-  INITIATED,
-  COMPLETED,
+  PENDING = 'PENDING',
+  INITIATED = 'INITIATED',
+  COMPLETED = 'COMPLETED',
 }
 
 @Entity()
@@ -22,10 +22,10 @@ export class Booking {
   id: number;
 
   @Column({ type: 'date' })
-  pickupDate: string;
+  pickupDate: Date;
 
   @Column({ type: 'date' })
-  returnDate: string;
+  returnDate: Date;
 
   @Column({
     type: 'enum',

@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Booking } from 'src/modules/booking/repository/booking.entity';
 import { Host } from 'src/modules/host/repository/host.entity';
+import { BookingModule } from '../booking/booking.module';
 import { CarAvailabilityModule } from '../car-availability/car-availability.module';
 import { HostModule } from '../host/host.module';
 import { HostCarController } from './controller/host-car.controller';
@@ -13,6 +14,7 @@ import { HostCarService } from './service/host-car.service';
     TypeOrmModule.forFeature([HostCar, Host, Booking]),
     HostModule,
     CarAvailabilityModule,
+    BookingModule,
   ],
   providers: [HostCarService],
   controllers: [HostCarController],
