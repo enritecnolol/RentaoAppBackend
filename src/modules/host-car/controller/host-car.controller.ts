@@ -5,12 +5,9 @@ import {
   Param,
   Post,
   Put,
-  Query,
   UseGuards,
 } from '@nestjs/common';
-import { query } from 'express';
 import { JwtAuthGuard } from '../../auth/guard/jwt-auth.guard';
-import { UpdateCarAvailability } from '../../car-availability/repository/car-availability.dto';
 import { CreateHostCarDTO, UpdateHostCarDTO } from '../repository/host-car.dto';
 import { HostCarService } from '../service/host-car.service';
 

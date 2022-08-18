@@ -51,7 +51,7 @@ export class HostCarService {
 
   async update(hostCar: UpdateHostCarDTO): Promise<HostCar> {
     try {
-      return await this.hostCarRepository.save(hostCar);
+      return await this.hostCarRepository.save(hostCar, { reload: true });
     } catch (error) {
       console.log(error);
       throw new HttpException('there was an error: hostCar-update', 400);

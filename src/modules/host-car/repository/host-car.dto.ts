@@ -42,6 +42,10 @@ export class CreateHostCarDTO {
 
   @IsNumber()
   hostId: number;
+
+  @IsString()
+  @IsOptional()
+  description: string;
 }
 export class UpdateHostCarDTO {
   @IsNumber()
@@ -106,4 +110,8 @@ export class UpdateHostCarDTO {
   @IsBoolean()
   @IsOptional()
   active: boolean;
+
+  @IsString()
+  @IsOptional()
+  description: string;
 }

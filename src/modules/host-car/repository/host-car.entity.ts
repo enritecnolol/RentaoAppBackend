@@ -56,6 +56,9 @@ export class HostCar {
   @Column()
   dayPrice: number;
 
+  @Column({ nullable: true })
+  description: string;
+
   @ManyToOne(() => Host, (host) => host.hostCars, {
     onDelete: 'CASCADE',
   })
