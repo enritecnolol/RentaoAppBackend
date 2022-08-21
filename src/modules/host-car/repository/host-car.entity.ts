@@ -11,6 +11,7 @@ import {
   OneToMany,
   OneToOne,
 } from 'typeorm';
+import { FileHostCar } from '../../file-upload/repository/file-host-car.entity';
 
 @Entity()
 export class HostCar {
@@ -81,6 +82,12 @@ export class HostCar {
     },
   )
   carAvailability: CarAvailability;
+
+  @OneToMany(() => FileHostCar, (fileHostCar) => fileHostCar.hostCar, {
+    nullable: true,
+    onDelete: 'CASCADE',
+  })
+  fileHostCar: FileHostCar[];
 
   @Column({ default: false })
   validated: boolean;
