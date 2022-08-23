@@ -31,6 +31,7 @@ export class HostCarController {
   @Get('available')
   findAllAvailable(@Body() options) {
     let bookingDates = {};
+    let latitudeAndLongitude = {};
     if (options.pickupDate && options.returnDate) {
       bookingDates = {
         pickupDate: options.pickupDate,
@@ -39,7 +40,19 @@ export class HostCarController {
       delete options.pickupDate;
       delete options.returnDate;
     }
-    return this.hostCarService.findAllAvailable(options, bookingDates);
+    if (options.latitude && options.longitude) {
+      latitudeAndLongitude = {
+        latitude: options.latitude,
+        longitude: options.longitude,
+      };
+      delete options.latitude;
+      delete options.longitude;
+    }
+    return this.hostCarService.findAllAvailable(
+      options,
+      bookingDates,
+      latitudeAndLongitude,
+    );
   }
 
   @UseGuards(JwtAuthGuard)

@@ -1,6 +1,6 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FindManyOptions, Not, Repository } from 'typeorm';
+import { FindManyOptions, In, Not, Repository } from 'typeorm';
 import { UpdateCarAvailability } from '../../car-availability/repository/car-availability.dto';
 import { currentStatus } from '../../car-availability/repository/car-availability.entity';
 import { CarAvailabilityService } from '../../car-availability/service/car-availability.service';
@@ -13,6 +13,16 @@ import { BookingService } from '../../booking/service/booking.service';
 type BookingDates = {
   pickupDate?: string;
   returnDate?: string;
+};
+
+type LatitudeAndLongitude = {
+  latitude?: string;
+  longitude?: string;
+};
+
+type HostCarNearst = {
+  id: number;
+  distance: number;
 };
 @Injectable()
 export class HostCarService {
@@ -87,7 +97,8 @@ export class HostCarService {
   async findAllAvailable(
     options: FindManyOptions<HostCar> = {},
     bookingDates: BookingDates = {},
-  ): Promise<HostCar[]> {
+    latitudeAndLongitude: LatitudeAndLongitude = {},
+  ): Promise<any> {
     const whereObject = {
       where: {
         carAvailability: {
@@ -98,8 +109,23 @@ export class HostCarService {
       },
       relations: ['carAvailability'],
     };
+
+    if (latitudeAndLongitude.latitude && latitudeAndLongitude.longitude) {
+      const carsIdAndDistance = await this.getHostCarNearest(
+        +latitudeAndLongitude.latitude,
+        +latitudeAndLongitude.longitude,
+      );
+
+      const carsId = carsIdAndDistance
+        .filter((carIdAndDistance) => carIdAndDistance.distance < 28)
+        .map((carIdAndDistance) => carIdAndDistance.id);
+      whereObject.where['id'] = In(carsId);
+    }
+
     const findOption = _.merge(whereObject, options);
+
     let carList = await this.hostCarRepository.find(findOption);
+
     if (bookingDates.pickupDate && bookingDates.returnDate) {
       carList = carList.filter(async (car) => {
         const carBookings = await this.bookingService.carHaveBookingOnThisDates(
@@ -110,6 +136,31 @@ export class HostCarService {
         return carBookings.length === 0;
       });
     }
+
     return carList;
+  }
+
+  async getHostCarNearest(
+    latidude: number,
+    longitude: number,
+  ): Promise<HostCarNearst[]> {
+    const cars: HostCarNearst[] = await this.hostCarRepository
+      .createQueryBuilder('hostCar')
+      .select('id')
+      .addSelect(
+        `3959 *
+    acos(cos(radians(${latidude}::DECIMAL)) * 
+    cos(radians("hostCar"."latitude"::DECIMAL)) * 
+    cos(radians("hostCar"."longitude"::DECIMAL) - 
+    radians(${longitude}::DECIMAL)) + 
+    sin(radians(${latidude}::DECIMAL)) * 
+    sin(radians("hostCar"."latitude"::DECIMAL)))`,
+        'distance',
+      )
+      .where('hostCar.validated = :value', { value: true })
+      .andWhere('hostCar.active = :value', { value: true })
+      .getRawMany();
+
+    return cars;
   }
 }
