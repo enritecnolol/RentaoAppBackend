@@ -43,6 +43,6 @@ export class HostService {
   }
 
   async update(host: UpdateHostDTO): Promise<Host> {
-    return this.hostRepository.save(host, { reload: true });
+    return await this.hostRepository.save(host, { reload: true });
   }
 }

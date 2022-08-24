@@ -1,4 +1,5 @@
 import {
+  IsBoolean,
   IsDateString,
   IsEmail,
   IsNumber,
@@ -74,4 +75,7 @@ export class UpdateCustomerDTO {
   @IsString()
   @IsOptional()
   nationality?: string;
+  @IsBoolean()
+  @IsOptional()
+  profileCompleted?: boolean;
 }

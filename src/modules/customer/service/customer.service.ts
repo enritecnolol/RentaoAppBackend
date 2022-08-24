@@ -46,6 +46,6 @@ export class CustomerService {
   }
 
   async update(customer: UpdateCustomerDTO): Promise<Customer> {
-    return this.customerRepository.save(customer, { reload: true });
+    return await this.customerRepository.save(customer, { reload: true });
   }
 }

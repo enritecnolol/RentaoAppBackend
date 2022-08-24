@@ -44,6 +44,9 @@ export class Host {
   @Column({ nullable: true })
   postalCode: string;
 
+  @Column({ default: false })
+  profileCompleted: boolean;
+
   @OneToMany(() => HostCar, (hostCar) => hostCar.host, {
     nullable: true,
     onDelete: 'CASCADE',

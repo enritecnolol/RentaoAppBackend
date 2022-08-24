@@ -26,6 +26,7 @@ type LoginOrRegister = {
     email: string;
     firstName: string;
     lastName: string;
+    profileCompleted: boolean;
   };
   token: string;
   userType: string;
@@ -65,6 +66,7 @@ export class AuthService {
         user: {
           id: entityData.id,
           ...user.user,
+          profileCompleted: entityData.profileCompleted,
         },
         userType,
         token,

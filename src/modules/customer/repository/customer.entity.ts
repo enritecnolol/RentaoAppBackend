@@ -46,6 +46,9 @@ export class Customer {
   @Column({ nullable: true })
   nationality: string;
 
+  @Column({ default: false })
+  profileCompleted: boolean;
+
   @OneToMany(() => Booking, (booking) => booking.customer, {
     nullable: true,
     onDelete: 'CASCADE',

@@ -1,4 +1,5 @@
 import {
+  IsBoolean,
   IsDateString,
   IsEmail,
   IsNumber,
@@ -68,4 +69,7 @@ export class UpdateHostDTO {
   @IsString()
   @IsOptional()
   postalCode?: string;
+  @IsBoolean()
+  @IsOptional()
+  profileCompleted?: boolean;
 }
