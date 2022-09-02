@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { forwardRef, HttpException, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindManyOptions, In, Not, Repository } from 'typeorm';
 import { UpdateCarAvailability } from '../../car-availability/repository/car-availability.dto';
@@ -31,6 +31,7 @@ export class HostCarService {
     private hostCarRepository: Repository<HostCar>,
     private hostService: HostService,
     private carAvailabilityService: CarAvailabilityService,
+    @Inject(forwardRef(() => BookingService))
     private bookingService: BookingService,
   ) {}
 

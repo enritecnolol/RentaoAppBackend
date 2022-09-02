@@ -14,6 +14,7 @@ export enum BookingStatus {
   PENDING = 'PENDING',
   INITIATED = 'INITIATED',
   COMPLETED = 'COMPLETED',
+  CANCELLED = 'CANCELLED',
 }
 
 @Entity()
@@ -26,6 +27,15 @@ export class Booking {
 
   @Column({ type: 'date' })
   returnDate: Date;
+
+  @Column()
+  dayPrice: number;
+
+  @Column()
+  totalDays: number;
+
+  @Column()
+  totalAmount: number;
 
   @Column({
     type: 'enum',

@@ -2,7 +2,6 @@ import {
   DataSource,
   EntitySubscriberInterface,
   EventSubscriber,
-  InsertEvent,
   UpdateEvent,
 } from 'typeorm';
 import { HostService } from '../service/host.service';
