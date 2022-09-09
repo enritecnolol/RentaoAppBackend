@@ -1,4 +1,4 @@
-import { IsDateString, IsNumber } from 'class-validator';
+import { IsDateString, IsNumber, IsString } from 'class-validator';
 
 export class CreateBookingDTO {
   @IsDateString()
@@ -12,4 +12,10 @@ export class CreateBookingDTO {
   @IsNumber()
   customerId: number;
 }
+
+export class CancelBookingDTO {
+  @IsString()
+  cancelDescription: string;
+}
+
 export class UpdateBookingDTO {}

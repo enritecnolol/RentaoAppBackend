@@ -44,6 +44,9 @@ export class Booking {
   })
   bookingStatus: BookingStatus;
 
+  @Column({ nullable: true })
+  cancelDescription: string;
+
   @ManyToOne(() => Host, (host) => host.bookings, {
     onDelete: 'CASCADE',
   })

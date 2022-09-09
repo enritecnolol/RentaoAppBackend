@@ -67,4 +67,26 @@ export class BookingService {
       throw new HttpException('there was an error: Booking-create', 400);
     }
   }
+
+  async cancel(bookingId: number, cancelDescription: string) {
+    try {
+      const booking = await this.bookingRepository.findOne({
+        where: {
+          id: bookingId,
+        },
+      });
+
+      if (!booking) {
+        throw new HttpException('booking not found', 400);
+      }
+
+      return await this.bookingRepository.save({
+        id: bookingId,
+        bookingStatus: BookingStatus.CANCELLED,
+        cancelDescription: cancelDescription,
+      });
+    } catch (error) {
+      throw new HttpException('there was an error: Booking-cancel', 400);
+    }
+  }
 }
