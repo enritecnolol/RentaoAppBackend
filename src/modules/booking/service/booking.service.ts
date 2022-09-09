@@ -45,16 +45,33 @@ export class BookingService {
     try {
       const host = await this.hostService.findById(data.hostId);
       const hostCar = await this.hostCarService.findById(data.hostCarId);
+
       if (hostCar.host.id !== data.hostId) {
-        throw new HttpException('the host does not own this car', 500);
+        throw new HttpException('the host does not own this car', 400);
       }
+
+      const isCarAvailable = await this.carHaveBookingOnThisDates(
+        data.hostCarId,
+        data.pickupDate,
+        data.returnDate,
+      );
+
+      if (isCarAvailable.length > 0) {
+        throw new HttpException(
+          'The car is not available for these dates',
+          400,
+        );
+      }
+
       const bookingDTO = this.bookingRepository.create({
         pickupDate: data.pickupDate,
         returnDate: data.returnDate,
       });
       const totalDays = this.daysBetweenDates(data.pickupDate, data.returnDate);
+
       bookingDTO.customer = await this.customerService.findById(
         data.customerId,
+        false,
       );
       bookingDTO.host = host;
       bookingDTO.hostCar = hostCar;
@@ -64,7 +81,7 @@ export class BookingService {
 
       return await this.bookingRepository.save(bookingDTO);
     } catch (error) {
-      throw new HttpException('there was an error: Booking-create', 400);
+      throw new HttpException(error.message, 400);
     }
   }
 
@@ -86,7 +103,7 @@ export class BookingService {
         cancelDescription: cancelDescription,
       });
     } catch (error) {
-      throw new HttpException('there was an error: Booking-cancel', 400);
+      throw new HttpException(error.message, 400);
     }
   }
 }

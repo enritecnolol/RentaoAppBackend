@@ -32,13 +32,13 @@ export class CustomerService {
     }
   }
 
-  async findById(id: number): Promise<Customer> {
+  async findById(id: number, loadRelation = true): Promise<Customer> {
     try {
       return await this.customerRepository.findOne({
         where: {
           id,
         },
-        loadRelationIds: true,
+        loadRelationIds: loadRelation,
       });
     } catch (error) {
       throw new HttpException('there was an error: customer-findById', 400);
