@@ -47,13 +47,16 @@ export class HostCarService {
     }
   }
 
-  async findById(id: number): Promise<HostCar> {
+  async findById(
+    id: number,
+    relations = ['host', 'carAvailability'],
+  ): Promise<HostCar> {
     try {
       return await this.hostCarRepository.findOne({
         where: {
           id,
         },
-        relations: ['host', 'carAvailability'],
+        relations: relations,
       });
     } catch (error) {
       throw new HttpException('there was an error: hostCar-findById', 400);
@@ -163,5 +166,10 @@ export class HostCarService {
       .getRawMany();
 
     return cars;
+  }
+
+  async getBookingByHostCar(hostCarId: number): Promise<any> {
+    const hostCar = await this.findById(hostCarId, ['bookings']);
+    return hostCar.bookings;
   }
 }

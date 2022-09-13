@@ -75,4 +75,10 @@ export class HostCarController {
   updateAvailability(@Param('id') id: string, @Body() carAvailability) {
     return this.hostCarService.updateAvailability(+id, carAvailability);
   }
+
+  @Get(':id/bookings')
+  @UseGuards(JwtAuthGuard)
+  getBookingByHostCar(@Param('id') id: string) {
+    return this.hostCarService.getBookingByHostCar(+id);
+  }
 }

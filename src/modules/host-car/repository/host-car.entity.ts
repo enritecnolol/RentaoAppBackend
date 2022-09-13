@@ -65,7 +65,7 @@ export class HostCar {
   })
   host: Host;
 
-  @OneToMany(() => Booking, (booking) => booking.host, {
+  @OneToMany(() => Booking, (booking) => booking.hostCar, {
     nullable: true,
     onDelete: 'CASCADE',
   })

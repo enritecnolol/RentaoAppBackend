@@ -1,6 +1,6 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Between, Repository } from 'typeorm';
+import { Between, FindManyOptions, Repository } from 'typeorm';
 import { CustomerService } from '../../customer/service/customer.service';
 import { HostCarService } from '../../host-car/service/host-car.service';
 import { HostService } from '../../host/service/host.service';
@@ -105,5 +105,22 @@ export class BookingService {
     } catch (error) {
       throw new HttpException(error.message, 400);
     }
+  }
+
+  async getMyBookings(
+    options: FindManyOptions<Booking> = {},
+  ): Promise<Booking[]> {
+    return await this.bookingRepository.find({
+      ...options,
+    });
+  }
+
+  async findById(id: number): Promise<any> {
+    return await this.bookingRepository.findOne({
+      where: {
+        id,
+      },
+      relations: ['hostCar'],
+    });
   }
 }
