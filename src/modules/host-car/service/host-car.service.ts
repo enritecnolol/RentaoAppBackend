@@ -9,6 +9,7 @@ import { CreateHostCarDTO, UpdateHostCarDTO } from '../repository/host-car.dto';
 import { HostCar } from '../repository/host-car.entity';
 import * as _ from 'lodash';
 import { BookingService } from '../../booking/service/booking.service';
+import { Booking } from '../../booking/repository/booking.entity';
 
 type BookingDates = {
   pickupDate?: string;
@@ -49,7 +50,7 @@ export class HostCarService {
 
   async findById(
     id: number,
-    relations = ['host', 'carAvailability'],
+    relations = ['host', 'carAvailability', 'fileHostCar'],
   ): Promise<HostCar> {
     try {
       return await this.hostCarRepository.findOne({
@@ -168,7 +169,7 @@ export class HostCarService {
     return cars;
   }
 
-  async getBookingByHostCar(hostCarId: number): Promise<any> {
+  async getBookingByHostCar(hostCarId: number): Promise<Booking[]> {
     const hostCar = await this.findById(hostCarId, ['bookings']);
     return hostCar.bookings;
   }
