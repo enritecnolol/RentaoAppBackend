@@ -5,6 +5,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../../auth/guard/jwt-auth.guard';
@@ -29,7 +30,7 @@ export class HostCarController {
 
   @UseGuards(JwtAuthGuard)
   @Get('available')
-  findAllAvailable(@Body() options) {
+  findAllAvailable(@Body() options, @Query() query) {
     let bookingDates = {};
     let latitudeAndLongitude = {};
     if (options.pickupDate && options.returnDate) {
@@ -52,6 +53,7 @@ export class HostCarController {
       options,
       bookingDates,
       latitudeAndLongitude,
+      query,
     );
   }
 
