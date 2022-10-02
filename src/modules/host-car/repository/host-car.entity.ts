@@ -11,6 +11,7 @@ import {
   OneToMany,
   OneToOne,
 } from 'typeorm';
+import { CustomerFavoriteHostCar } from '../../customer-favorite-host-car/repository/customer-favorite-host-car.entity';
 import { FileHostCar } from '../../file-upload/repository/file-host-car.entity';
 
 @Entity()
@@ -88,6 +89,16 @@ export class HostCar {
     onDelete: 'CASCADE',
   })
   fileHostCar: FileHostCar[];
+
+  @OneToMany(
+    () => CustomerFavoriteHostCar,
+    (favoriteHostCar) => favoriteHostCar.hostCar,
+    {
+      nullable: true,
+      onDelete: 'CASCADE',
+    },
+  )
+  customerFavoriteHostCar: CustomerFavoriteHostCar[];
 
   @Column({ default: false })
   validated: boolean;

@@ -10,6 +10,7 @@ import { HostCar } from '../repository/host-car.entity';
 import * as _ from 'lodash';
 import { BookingService } from '../../booking/service/booking.service';
 import { Booking } from '../../booking/repository/booking.entity';
+import { DataPaginate, paginate, Query } from '../../../util/pagination';
 
 type BookingDates = {
   pickupDate?: string;
@@ -26,15 +27,6 @@ type HostCarNearst = {
   distance: number;
 };
 
-type Query = {
-  limit?: number;
-  page?: number;
-};
-
-type DataPaginate = {
-  data: HostCar[];
-  totalItems: number;
-};
 @Injectable()
 export class HostCarService {
   constructor(
@@ -109,14 +101,6 @@ export class HostCarService {
     });
   }
 
-  paginate(data: HostCar[], limit: number, page: number) {
-    const dataPaginated = data.slice((page - 1) * limit, page * limit);
-    return {
-      data: dataPaginated,
-      totalItems: dataPaginated.length,
-    };
-  }
-
   async findAllAvailable(
     options: FindManyOptions<HostCar> = {},
     bookingDates: BookingDates = {},
@@ -163,7 +147,7 @@ export class HostCarService {
 
     if (!_.isEmpty(query)) {
       const { limit, page } = query;
-      return this.paginate(carList, limit, page);
+      return paginate(carList, limit, page);
     }
     return carList;
   }

@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
+import { CustomerFavoriteHostCar } from '../../customer-favorite-host-car/repository/customer-favorite-host-car.entity';
 
 @Entity()
 export class Customer {
@@ -54,6 +55,16 @@ export class Customer {
     onDelete: 'CASCADE',
   })
   bookings: Booking[];
+
+  @OneToMany(
+    () => CustomerFavoriteHostCar,
+    (favoriteHostCar) => favoriteHostCar.customer,
+    {
+      nullable: true,
+      onDelete: 'CASCADE',
+    },
+  )
+  customerFavoriteHostCar: CustomerFavoriteHostCar[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

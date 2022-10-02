@@ -14,6 +14,7 @@ import { BookingModule } from './modules/booking/booking.module';
 import { CarAvailabilityModule } from './modules/car-availability/car-availability.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { FileUploadModule } from './modules/file-upload/file-upload.module';
+import { CustomerFavoriteHostCarModule } from './modules/customer-favorite-host-car/customer-favorite-host-car.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { FileUploadModule } from './modules/file-upload/file-upload.module';
     CarAvailabilityModule,
     AuthModule,
     FileUploadModule,
+    CustomerFavoriteHostCarModule,
   ],
   controllers: [AppController],
   providers: [
