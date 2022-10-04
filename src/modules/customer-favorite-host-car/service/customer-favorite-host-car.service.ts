@@ -49,14 +49,13 @@ export class CustomerFavoriteHostCarService {
     customerId: number,
     query: Query = {},
   ): Promise<CustomerFavoriteHostCar[] | DataPaginate> {
-    const customer = await await this.customerService.findById(
-      customerId,
-      false,
-    );
     const result = await this.favoriteHostCarRepository.findAndCount({
       where: {
-        customer: customer,
+        customer: {
+          id: customerId,
+        },
       },
+      relations: ['hostCar', 'hostCar.fileHostCar'],
     });
 
     if (!_.isEmpty(query)) {

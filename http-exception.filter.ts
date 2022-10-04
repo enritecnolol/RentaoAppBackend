@@ -23,7 +23,7 @@ export class HttpExceptionFilter
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
     let message: string | HttpException = '';
-    if (!exception.response.message) {
+    if (!exception?.response?.message) {
       message =
         exception instanceof HttpException
           ? exception.message ?? exception

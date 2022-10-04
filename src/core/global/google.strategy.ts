@@ -11,7 +11,7 @@ export class GoogleStrategy extends PassportStrategy(
     super({
       clientID: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
-      audience: [process.env.GOOGLE_IOS_ID],
+      audience: [process.env.GOOGLE_IOS_ID, process.env.GOOGLE_ID],
     });
   }
 
