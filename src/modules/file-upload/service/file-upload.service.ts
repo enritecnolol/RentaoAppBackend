@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { HostCarService } from '../../host-car/service/host-car.service';
@@ -31,6 +31,9 @@ export class FileUploadService {
   ) {}
   async uploadFileHostCar(files: Express.Multer.File[], hostCarId: number) {
     const hostCar = await this.hostCarService.findById(hostCarId);
+    if (!hostCar) {
+      throw new HttpException('This host car does not exist', 400);
+    }
     const filename = uuidv4();
     const ListOfPathByImages = await Promise.all(
       await files.map(async (file) => {
