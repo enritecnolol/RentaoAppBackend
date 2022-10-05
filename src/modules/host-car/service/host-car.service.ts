@@ -114,8 +114,11 @@ export class HostCarService {
         },
         validated: true,
         active: true,
+        fileHostCar: {
+          size: 'sm',
+        },
       },
-      relations: ['carAvailability'],
+      relations: ['carAvailability', 'fileHostCar'],
     };
 
     if (latitudeAndLongitude.latitude && latitudeAndLongitude.longitude) {
