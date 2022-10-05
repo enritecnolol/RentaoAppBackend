@@ -5,8 +5,13 @@ import { HostCarService } from '../../host-car/service/host-car.service';
 import { FileHostCar } from '../repository/file-host-car.entity';
 import * as sharp from 'sharp';
 import { readFileSync } from 'fs';
+import { v4 as uuidv4 } from 'uuid';
 
 const imageSizes = [
+  {
+    label: 'sm',
+    size: [110, 110],
+  },
   {
     label: 'md',
     size: [720, 350],
@@ -26,15 +31,13 @@ export class FileUploadService {
   ) {}
   async uploadFileHostCar(files: Express.Multer.File[], hostCarId: number) {
     const hostCar = await this.hostCarService.findById(hostCarId);
+    const filename = uuidv4();
     const ListOfPathByImages = await Promise.all(
       await files.map(async (file) => {
         return await Promise.all(
           imageSizes.map(async (imageSize) => {
             const [width, height] = imageSize.size;
-            const filename = file.originalname.replace(/\..+$/, '');
-            const newFileName = `${filename}-${Date.now()}-${imageSize.label}-${
-              imageSize.size[0]
-            }x${imageSize.size[1]}.jpg`;
+            const newFileName = `${filename}-${imageSize.label}-${imageSize.size[0]}x${imageSize.size[1]}.jpg`;
             const bufferImgOriginal = readFileSync(file.path);
             await sharp(bufferImgOriginal)
               .resize(width, height, {
@@ -42,7 +45,11 @@ export class FileUploadService {
               })
               .toFormat('jpg')
               .toFile(`${file.destination}/${newFileName}`);
-            return `${file.destination}/${newFileName}`;
+            return {
+              path: `${file.destination}/${newFileName}`,
+              fileName: newFileName,
+              size: imageSize.label,
+            };
           }),
         );
       }),
@@ -51,7 +58,9 @@ export class FileUploadService {
 
     await imagePathList.map(async (file) => {
       const fileHostCarDTO = await this.fileHostCarRepository.create({
-        filePath: file,
+        filePath: file.path.substring(1),
+        name: file.fileName,
+        size: file.size,
         hostCar: hostCar,
       });
       await this.fileHostCarRepository.save(fileHostCarDTO);

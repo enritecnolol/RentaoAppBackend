@@ -4,7 +4,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Request } from 'express';
 import { access, mkdir } from 'fs/promises';
 import { diskStorage } from 'multer';
-import { extname } from 'path';
 import { HostCarModule } from '../host-car/host-car.module';
 import { HostCar } from '../host-car/repository/host-car.entity';
 import { FileUploadController } from './controller/file-upload.controller';

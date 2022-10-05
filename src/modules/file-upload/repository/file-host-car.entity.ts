@@ -9,6 +9,12 @@ export class FileHostCar {
   @Column()
   filePath: string;
 
+  @Column()
+  name: string;
+
+  @Column()
+  size: string;
+
   @Column({ nullable: true })
   index: number;
 
