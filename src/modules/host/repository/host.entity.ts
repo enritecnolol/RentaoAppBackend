@@ -27,6 +27,9 @@ export class Host {
   identification: string;
 
   @Column({ nullable: true })
+  identificationImg: string;
+
+  @Column({ nullable: true })
   nationality: string;
 
   @Column({ type: 'date', nullable: true })
@@ -46,6 +49,9 @@ export class Host {
 
   @Column({ default: false })
   profileCompleted: boolean;
+
+  @Column({ nullable: true })
+  profileImg: string;
 
   @OneToMany(() => HostCar, (hostCar) => hostCar.host, {
     nullable: true,

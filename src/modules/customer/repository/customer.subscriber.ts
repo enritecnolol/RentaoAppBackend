@@ -29,7 +29,7 @@ export class CustomerSubscriber implements EntitySubscriberInterface<Customer> {
         customerData.address &&
         customerData.city &&
         customerData.postalCode &&
-        customerData.driverLicense
+        customerData.identification
       ) {
         this.customerService.update({
           id: event.entity.id,

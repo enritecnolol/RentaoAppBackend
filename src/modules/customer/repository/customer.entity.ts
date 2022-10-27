@@ -24,10 +24,10 @@ export class Customer {
   email: string;
 
   @Column({ unique: true, nullable: true })
-  driverLicense: string;
+  identification: string;
 
-  @Column({ type: 'date', nullable: true })
-  expiry: string;
+  @Column({ nullable: true })
+  identificationImg: string;
 
   @Column({ type: 'date', nullable: true })
   dateOfBirth: string;
@@ -46,6 +46,9 @@ export class Customer {
 
   @Column({ nullable: true })
   nationality: string;
+
+  @Column({ nullable: true })
+  profileImg: string;
 
   @Column({ default: false })
   profileCompleted: boolean;

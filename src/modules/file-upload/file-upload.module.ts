@@ -4,8 +4,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Request } from 'express';
 import { access, mkdir } from 'fs/promises';
 import { diskStorage } from 'multer';
+import { customerModule } from '../customer/customer.module';
 import { HostCarModule } from '../host-car/host-car.module';
 import { HostCar } from '../host-car/repository/host-car.entity';
+import { HostModule } from '../host/host.module';
 import { FileUploadController } from './controller/file-upload.controller';
 import { FileHostCar } from './repository/file-host-car.entity';
 import { FileUploadService } from './service/file-upload.service';
@@ -14,12 +16,13 @@ import { FileUploadService } from './service/file-upload.service';
   imports: [
     TypeOrmModule.forFeature([FileHostCar, HostCar]),
     HostCarModule,
+    customerModule,
+    HostModule,
     MulterModule.registerAsync({
       useFactory: () => {
         const storage = diskStorage({
           destination: async (req: Request, _: Express.Multer.File, cb) => {
-            const { id } = req.params;
-            const newDestination = ['./files/cars', id].join('/');
+            const newDestination = './files';
             try {
               await access(newDestination);
             } catch (e) {
