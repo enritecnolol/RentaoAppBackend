@@ -16,10 +16,7 @@ export class CreateCustomerDTO {
   email: string;
   @IsString()
   @IsOptional()
-  driverLicense?: string;
-  @IsDateString()
-  @IsOptional()
-  expiry?: string;
+  identification?: string;
   @IsDateString()
   @IsOptional()
   dateOfBirth?: string;
@@ -51,12 +48,6 @@ export class UpdateCustomerDTO {
   @IsEmail()
   @IsOptional()
   email?: string;
-  @IsString()
-  @IsOptional()
-  driverLicense?: string;
-  @IsDateString()
-  @IsOptional()
-  expiry?: string;
   @IsDateString()
   @IsOptional()
   dateOfBirth?: string;

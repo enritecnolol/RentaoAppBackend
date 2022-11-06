@@ -14,6 +14,8 @@ async function bootstrap() {
     }),
   );
   app.use('/files', express.static(join(__dirname, '../../files')));
+  app.use(express.json({ limit: '50mb' }));
+  app.use(express.urlencoded({ extended: true, limit: '50mb' }));
   await app.listen(8083);
 }
 bootstrap();
