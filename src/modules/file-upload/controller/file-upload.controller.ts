@@ -36,6 +36,7 @@ export class FileUploadController {
     if (!(field == 'identificationImg' || field == 'profileImg')) {
       throw new HttpException('invalid param', 400);
     }
+    console.log('file:', file);
     return this.fileUploadService.uploadEntityImg(file[0], user, field);
   }
 }
