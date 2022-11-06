@@ -100,7 +100,7 @@ export class FileUploadService {
     const entityData = await entityService.findByEmail(user.email);
     const bufferImgOriginal = readFileSync(file.path);
     const newFileName = `${uuidv4()}.jpg`;
-    const [width, height] = imageSizes[0].size;
+    const [width, height] = imageSizes[1].size;
 
     await this.StorageImg(
       bufferImgOriginal,
