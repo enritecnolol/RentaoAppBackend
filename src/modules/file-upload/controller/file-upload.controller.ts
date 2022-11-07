@@ -27,23 +27,25 @@ export class FileUploadController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Post('/entity-img/:field')
+  // @Post('/entity-img/:field')
+  @Post('/entity-img')
   @UseInterceptors(FilesInterceptor('file'))
   uploadEntityImg(
     @UploadedFiles() file: Express.Multer.File,
     @User() user: TokenUser,
-    @Param('field') field: string,
+    // @Param('field') field: string,
     @Body() body,
   ) {
-    console.log(
-      '🚀 ~ file: file-upload.controller.ts ~ line 39 ~ FileUploadController ~ field',
-      field,
-    );
-    if (!(field === 'identificationImg' || field === 'profileImg')) {
-      throw new HttpException('invalid param', 400);
-    }
+    // if (!(field === 'identificationImg' || field === 'profileImg')) {
+    //   throw new HttpException('invalid param', 400);
+    // }
     console.log('file:', file);
     console.log('Body:', body);
-    return this.fileUploadService.uploadEntityImg(file[0], user, field);
+    // return this.fileUploadService.uploadEntityImg(file[0], user, field);
+    return this.fileUploadService.uploadEntityImg(
+      file[0],
+      user,
+      'identificationImg',
+    );
   }
 }
