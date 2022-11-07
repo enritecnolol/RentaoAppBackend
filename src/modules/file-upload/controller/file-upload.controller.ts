@@ -35,7 +35,11 @@ export class FileUploadController {
     @Param('field') field: string,
     @Body() body,
   ) {
-    if (!(field == 'identificationImg' || field == 'profileImg')) {
+    console.log(
+      '🚀 ~ file: file-upload.controller.ts ~ line 39 ~ FileUploadController ~ field',
+      field,
+    );
+    if (!(field === 'identificationImg' || field === 'profileImg')) {
       throw new HttpException('invalid param', 400);
     }
     console.log('file:', file);
