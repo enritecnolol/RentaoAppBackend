@@ -6,21 +6,21 @@ import { FileHostCar } from '../repository/file-host-car.entity';
 import * as sharp from 'sharp';
 import { readFileSync } from 'fs';
 import { v4 as uuidv4 } from 'uuid';
-import { TokenUser } from '../../../types';
+import { ImageSizesEnum, TokenUser } from '../../../types';
 import { HostService } from '../../host/service/host.service';
 import { CustomerService } from '../../customer/service/customer.service';
 
 const imageSizes = [
   {
-    label: 'sm',
+    label: ImageSizesEnum.SM,
     size: [180, 180],
   },
   {
-    label: 'md',
+    label: ImageSizesEnum.MD,
     size: [720, 350],
   },
   {
-    label: 'lg',
+    label: ImageSizesEnum.LG,
     size: [1440, 700],
   },
 ];

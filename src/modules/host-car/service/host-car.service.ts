@@ -11,6 +11,7 @@ import * as _ from 'lodash';
 import { BookingService } from '../../booking/service/booking.service';
 import { Booking } from '../../booking/repository/booking.entity';
 import { DataPaginate, paginate, Query } from '../../../util/pagination';
+import { ImageSizesEnum } from '../../../types';
 
 type BookingDates = {
   pickupDate?: string;
@@ -95,10 +96,20 @@ export class HostCarService {
     }
   }
 
-  async findAll(options: FindManyOptions<HostCar> = {}): Promise<HostCar[]> {
-    return await this.hostCarRepository.find({
+  async findAll(
+    options: FindManyOptions<HostCar> = {},
+    query: Query = {},
+  ): Promise<HostCar[] | DataPaginate> {
+    const result = await this.hostCarRepository.find({
       ...options,
     });
+
+    if (!_.isEmpty(query)) {
+      const { limit, page } = query;
+      return paginate(result, limit, page);
+    }
+
+    return result;
   }
 
   async findAllAvailable(
@@ -115,7 +126,7 @@ export class HostCarService {
         validated: true,
         active: true,
         fileHostCar: {
-          size: 'sm',
+          size: ImageSizesEnum.SM,
         },
       },
       relations: ['carAvailability', 'fileHostCar'],

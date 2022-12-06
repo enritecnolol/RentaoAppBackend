@@ -24,8 +24,8 @@ export class HostCarController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  findAll(@Body() options) {
-    return this.hostCarService.findAll(options);
+  findAll(@Body() options, @Query() query) {
+    return this.hostCarService.findAll(options, query);
   }
 
   @UseGuards(JwtAuthGuard)

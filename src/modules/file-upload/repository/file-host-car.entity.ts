@@ -1,4 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { ImageSizesEnum } from '../../../types';
 import { HostCar } from '../../host-car/repository/host-car.entity';
 
 @Entity()
@@ -13,7 +14,7 @@ export class FileHostCar {
   name: string;
 
   @Column()
-  size: string;
+  size: ImageSizesEnum;
 
   @Column({ nullable: true })
   index: number;
